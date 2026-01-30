@@ -1,0 +1,33 @@
+<button (click)="prevPage()">Anterior</button>
+<button (click)="nextPage()">Próximo</button>
+
+@if (loading()) {
+  <p>Carregando...</p>
+}
+
+@if (error()) {
+  <p>{{ error() }}</p>
+}
+
+<div class="grid grid-cols-4 gap-4">
+  @for (pokemon of pokemons(); track pokemon.id) {
+    <div
+      class="{{
+        `border p-4 rounded ${
+          pokemon.types.includes('fire')
+            ? 'bg-[#FC6C6D]'
+            : pokemon.types.includes('grass') || pokemon.types.includes('bug') ? 'bg-[#48D1B0]'
+            : pokemon.types.includes('water') ? 'bg-[#75BDF9]'
+            : pokemon.types.includes('electric') ? 'bg-[#FED86F]'
+            : pokemon.types.includes('poison') ? 'bg-[#C080C0]'
+            : pokemon.types.includes('ground') ? 'bg-[#D2B48C]'
+            : pokemon.types.includes('fairy') ? 'bg-[#F5C2E6]' : 'bg-gray-200'
+        }`
+      }}"
+    >
+      <img [src]="pokemon.image" class="w-20" />
+      <h3>{{ pokemon.name }}</h3>
+      <span>{{ pokemon.types }}</span>
+    </div>
+  }
+</div>
