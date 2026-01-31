@@ -9,6 +9,14 @@ export class PokemonService {
 
   constructor(private http: HttpClient) {}
 
+  getPokemonSpecies(id: number) {
+    return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
+  }
+
+  getEvolutionChain(url: string) {
+    return this.http.get<any>(url);
+  }
+
   getPokemons(page = 0, limit = 20): Observable<Pokemon[]> {
     const offset = page * limit;
 
