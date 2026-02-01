@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Evoluções</h2>
+
+<mat-dialog-content>
+  <div class="flex justify-center gap-4">
+    @for (evo of data.evolutions; track $index) {
+      <div class="text-center">
+        <img
+          [src]="
+            evo.image
+          "
+          class="w-20 h-20 mx-auto"
+        />
+        <p class="capitalize">{{ evo.name }}</p>
+        <p class="text-xs">{{ evo.types.join(', ') }}</p>
+      </div>
+    }
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Fechar</button>
+</mat-dialog-actions>

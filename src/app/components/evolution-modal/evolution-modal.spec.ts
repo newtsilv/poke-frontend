@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeSectionComponent } from './home-section';
+import { EvolutionModal } from './evolution-modal';
 
-describe('HomeSection', () => {
-  let component: HomeSectionComponent;
-  let fixture: ComponentFixture<HomeSectionComponent>;
+describe('EvolutionModal', () => {
+  let component: EvolutionModal;
+  let fixture: ComponentFixture<EvolutionModal>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeSectionComponent]
+      imports: [EvolutionModal]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HomeSectionComponent);
+    fixture = TestBed.createComponent(EvolutionModal);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
