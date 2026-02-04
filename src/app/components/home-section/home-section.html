@@ -1,4 +1,4 @@
-<section class="bg-red-500 flex flex-col items-center h-full">
+<section class="bg-red-500 flex flex-col items-center h-full ">
   @if (loading()) {
     <p>Carregando...</p>
   }
@@ -6,39 +6,24 @@
   @if (error()) {
     <p>{{ error() }}</p>
   }
-  <input type="text" placeholder="Buscar Pokémon" class="m-4 p-2 w-[90%] rounded-full bg-white " />
+  <input type="text" placeholder="Buscar Pokémon" class="m-4 p-2 w-[90%] rounded-full bg-white" />
 
-  <div class="flex flex-wrap align-between gap-4 bg-white p-4 rounded-xl w-[95%] max-h-[85vh] justify-center overflow-y-auto ">
+  <div
+    class="flex flex-wrap align-between gap-4 bg-white p-4 rounded-xl w-[95%] max-h-[85vh] justify-center overflow-y-auto "
+  >
     @for (pokemon of pokemons(); track pokemon.id) {
-      <div (click)="openEvolutionModal(pokemon)"
-      class="{{
-        ` relative rounded-xl flex flex-col justify-center items-center md:w-40 w-35 h-35 md:h-40 transition-transform hover:scale-105 ${
-          pokemon.types.includes('fire')
-          ? 'bg-[#F57D31]'
-          : pokemon.types.includes('grass') || pokemon.types.includes('bug')
-          ? 'bg-[#74CB48]'
-          : pokemon.types.includes('water')
-          ? 'bg-[#6493EB]'
-          : pokemon.types.includes('electric')
-          ? 'bg-[#F9CF30]'
-          : pokemon.types.includes('poison')
-          ? 'bg-[#A43E9E]'
-          : pokemon.types.includes('ground')
-          ? 'bg-[#DEC16B]'
-          : pokemon.types.includes('fairy')
-          ? 'bg-[#E69EAC]'
-          : 'bg-[#AAA67F]'
-        }`
-      }}"
+      <div
+        (click)="openEvolutionModal(pokemon)"
+        class="relative rounded-xl flex flex-col justify-center items-center md:w-40 w-35 h-35 md:h-40 transition-transform hover:scale-105 cursor-pointer bg-[{{ getPokemonBgClass(pokemon.types) }}]"
       >
-      <img [src]="pokemon.image" class="w-25 flex relative z-1" />
+        <img [src]="pokemon.image" class="w-25 flex relative z-1" />
         <div class="">
           <h3 class="text-xl font-medium text-white relative z-1">
             {{ pokemon.name | titlecase }}
           </h3>
         </div>
         <div class="absolute bottom-0 left-0 w-full h-1/2 z-0 rounded-xl bg-black/10"></div>
-        <img src="assets/pokeball.svg" alt="" class="absolute w-30 h-30  opacity-60" />
+        <img src="assets/pokeball.svg" alt="" class="absolute w-30 h-30 opacity-60" />
       </div>
     }
     <button (click)="prevPage()">Anterior</button>

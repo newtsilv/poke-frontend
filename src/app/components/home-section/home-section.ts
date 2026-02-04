@@ -4,12 +4,14 @@ import { PokemonService } from '../../../services/pokemon.service';
 import { Pokemon } from '../../models/pokemon.module';
 import { MatDialog } from '@angular/material/dialog';
 import { EvolutionModal } from '../evolution-modal/evolution-modal';
+import { getPokemonBgClass } from '../../utils/pokemon-color.util';
 
 @Component({
   standalone: true,
   imports: [CommonModule],
   templateUrl: './home-section.html',
 })
+
 export class HomeSectionComponent {
   pokemons = signal<Pokemon[]>([]);
   page = signal(0);
@@ -18,8 +20,12 @@ export class HomeSectionComponent {
   evolutions = signal<Pokemon[]>([]);
   modalOpen = signal(false);
 
+  getPokemonBgClass = getPokemonBgClass;
+
+
   loading = signal(false);
   error = signal<string | null>(null);
+
 
   constructor(
     private pokemonService: PokemonService,
@@ -52,10 +58,6 @@ export class HomeSectionComponent {
 
   prevPage() {
     this.page.update((p) => Math.max(p - 1, 0));
-  }
-
-  primeiraMaiuscula(text: string) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
   openEvolutionModal(pokemon: Pokemon) {
