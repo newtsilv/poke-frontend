@@ -36,13 +36,24 @@ export class EvolutionModal {
       this.scroll();
     }
   }
+  goTo(index: number) {
+    this.currentIndex = index;
+    this.scroll();
+  }
 
   scroll() {
-    const width = this.carousel.nativeElement.clientWidth;
-    this.carousel.nativeElement.scrollTo({
+    const container = this.carousel.nativeElement;
+    const width = container.clientWidth;
+    container.scrollTo({
       left: width * this.currentIndex,
       behavior: 'smooth',
     });
+  }
+  onScroll() {
+    const container = this.carousel.nativeElement;
+    const width = container.clientWidth;
+
+    this.currentIndex = Math.round(container.scrollLeft / width);
   }
 
   constructor(

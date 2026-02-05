@@ -21,6 +21,20 @@ export class PokemonService {
     return Number(url.split('/').filter(Boolean).pop());
   }
 
+  private mapStats(stats: any[]) {
+    return stats.map((stat) => ({
+      name: stat.stat.name,
+      value: stat.base_stat,
+    }));
+  }
+
+  private mapAbilities(abilities: any[]) {
+    return abilities.map((ab) => ({
+      name: ab.ability.name,
+      hidden: ab.is_hidden,
+    }));
+  }
+
   private toPokemon(detail: any): Pokemon {
     return {
       id: detail.id,
@@ -30,6 +44,8 @@ export class PokemonService {
         detail.sprites.front_default ??
         '',
       types: detail.types.map((t: any) => t.type.name),
+      stats: this.mapStats(detail.stats),
+      abilities: this.mapAbilities(detail.abilities),
     };
   }
 

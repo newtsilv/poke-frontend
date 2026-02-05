@@ -9,12 +9,13 @@
   <input type="text" placeholder="Buscar Pokémon" class="m-4 p-2 w-[90%] rounded-full bg-white" />
 
   <div
-    class="flex flex-wrap align-between gap-4 bg-white p-4 rounded-xl w-[95%] max-h-[85vh] justify-center overflow-y-auto "
+    class="flex flex-wrap align-between gap-4 bg-white p-4 rounded-xl w-[95%] max-h-[85vh] justify-center overflow-y-auto scrollbar-hidden"
   >
     @for (pokemon of pokemons(); track pokemon.id) {
       <div
         (click)="openEvolutionModal(pokemon)"
-        class="relative rounded-xl flex flex-col justify-center items-center md:w-40 w-35 h-35 md:h-40 transition-transform hover:scale-105 cursor-pointer bg-[{{ getPokemonBgClass(pokemon.types) }}]"
+        class="relative rounded-xl flex flex-col justify-center items-center md:w-40 w-35 h-35 md:h-40 transition-transform hover:scale-105 cursor-pointer"
+        [style.background]="getPokemonBgClass(pokemon.types)"
       >
         <img [src]="pokemon.image" class="w-25 flex relative z-1" />
         <div class="">
