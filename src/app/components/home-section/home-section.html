@@ -1,8 +1,4 @@
 <section class="bg-red-500 flex flex-col items-center h-full ">
-  @if (loading()) {
-    <p>Carregando...</p>
-  }
-
   @if (error()) {
     <p>{{ error() }}</p>
   }

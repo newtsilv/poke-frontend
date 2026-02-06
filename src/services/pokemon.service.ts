@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, map, switchMap, tap } from 'rxjs';
+import { Observable, finalize, forkJoin, map, switchMap, tap } from 'rxjs';
 import { Pokemon } from '../../src/app/models/pokemon.module';
 import { environment } from '../environments/environment.development';
 import { PokemonSpecies } from '../app/models/pokemon-species.module';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 import { of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -15,7 +16,10 @@ export class PokemonService {
   private evolutionCache = new Map<number, Pokemon[]>();
   private readonly SPECIES_PAGE_SIZE = 40;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private loadingBar: LoadingBarService,
+  ) {}
 
   private extractId(url: string): number {
     return Number(url.split('/').filter(Boolean).pop());
@@ -71,18 +75,23 @@ export class PokemonService {
   getBasePokemons(page = 0, limit = 20): Observable<Pokemon[]> {
     const required = (page + 1) * limit;
 
+    const ref = this.loadingBar.useRef('pokemon');
+
+    ref.start(); // 👈 força loading IMEDIATO
+
     return this.fetchBaseSpeciesUpTo(required).pipe(
       map((allBases) => {
         const start = page * limit;
         return allBases.slice(start, start + limit);
       }),
       switchMap((pageBases) =>
-        forkJoin<Pokemon[]>(
+        forkJoin(
           pageBases.map((s) =>
             this.http.get<any>(`${this.API}/${s.id}`).pipe(map((d) => this.toPokemon(d))),
           ),
         ),
       ),
+      finalize(() => ref.complete()), 
     );
   }
 

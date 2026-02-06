@@ -15,3 +15,7 @@ export interface Pokemon {
   stats?: PokemonStat[];
   abilities?: PokemonAbility[];
 }
+
+type PokemonUI = Pokemon & {
+  bgColor: string;
+};
